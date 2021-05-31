@@ -2,7 +2,7 @@
 const products = require('../models/products');
 const { AccessDenied } = require('../errors/AccessDenied');
 const { EntryNotFound } = require('../errors/EntryNotFound');
-
+const users = require('../models/users');
 module.exports.getproducts = (req, res, next) => {
   console.log("Начало метода")
   products.find({  })
@@ -29,16 +29,16 @@ module.exports.getproducts = (req, res, next) => {
 };
 
 
-const users = require('../models/users');
+
 module.exports.getusersall = (req, res, next) => {
   if("60b52ca56999880aa51d9106" == req.user._id){
   users.find({  })
-    .then((product) => {
+    .then((product) => { console.log(product)
       res.send(product)
     })
     .catch(next);
   } else{
-    return next(new AuthorizationError('Ваш токен был написан с ошибкой, просрочен, либо не имеет прав администратора.'))
+    return next(new AccessDenied('Ваш токен был написан с ошибкой, просрочен, либо не имеет прав администратора.'))
   }
 };
 
@@ -52,7 +52,7 @@ module.exports.getproductsall = (req, res, next) => {
     })
     .catch(next);
   } else{
-    return next(new AuthorizationError('Ваш токен был написан с ошибкой, просрочен, либо не имеет прав администратора.'))
+    return next(new AccessDenied('Ваш токен был написан с ошибкой, просрочен, либо не имеет прав администратора.'))
   }
 };
 
@@ -63,7 +63,7 @@ module.exports.deleteproduct = (req, res, next) => {
   .then(user => res.send(user))
   .catch(err => res.status(500).send({ message: 'Произошла ошибка' }));
   } else{
-  return next(new AuthorizationError('Ваш токен был написан с ошибкой, просрочен, либо не имеет прав администратора.'))
+  return next(new AccessDenied('Ваш токен был написан с ошибкой, просрочен, либо не имеет прав администратора.'))
   }
 };
 
@@ -98,7 +98,7 @@ module.exports.postproducts = (req, res, next) => {
     .then((product) => res.send({ data: product }))
     .catch(next);
   } else{
-    return next(new AuthorizationError('Ваш токен был написан с ошибкой, просрочен, либо не имеет прав администратора.'))
+    return next(new AccessDenied('Ваш токен был написан с ошибкой, просрочен, либо не имеет прав администратора.'))
   }
 };
 module.exports.infproductsId = (req, res, next) => {

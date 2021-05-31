@@ -1,7 +1,7 @@
 
 const router = require('express').Router();
 const { celebrate, Joi } = require('celebrate');
-const { getproducts, findproducts, infproductsId, getusersall } = require('../controllers/product');
+const { getproducts, findproducts, infproductsId } = require('../controllers/product');
 Joi.objectId = require('joi-objectid')(Joi);
 
 router.get('/products', getproducts);// здесь не стал реализовывать схему, так как ничего не передаем
@@ -18,5 +18,5 @@ router.get('/products/:id', celebrate({
 }), infproductsId);
 
 
-router.get('/usersall', getusersall);
+
 module.exports = router;

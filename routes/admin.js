@@ -1,6 +1,6 @@
 
 const router = require('express').Router();
-const { getproductsall, deleteproduct, postproducts } = require('../controllers/product');
+const { getproductsall, deleteproduct, postproducts, getusersall } = require('../controllers/product');
 const { celebrate, Joi } = require('celebrate');
 Joi.objectId = require('joi-objectid')(Joi);
 
@@ -24,5 +24,5 @@ router.post('/products', celebrate({
     }),
   }), postproducts); 
 // Команды от админа
-
+router.get('/usersall', getusersall);
 module.exports = router;
