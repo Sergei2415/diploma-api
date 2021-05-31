@@ -7,7 +7,7 @@ const { errors } = require('celebrate');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const routers = require('./routes/index');
-
+const path = require('path');
 const rateLimit = require('./middlewares/RateLimit');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const errorhandler = require('./ErrorHandler');
@@ -40,7 +40,13 @@ app.use(requestLogger);
 app.use(cookieParser());
 
 
-app.use(routers);
+// подключаем главный роутер приложения на /api
+app.use('/api', routers);
+
+// раздаём папку с собранным фронтендом
+app.use(express.static(path.join(__dirname, 'public')));
+
+//app.use(routers);
 app.use(errors());
 app.use(errorLogger);
 
