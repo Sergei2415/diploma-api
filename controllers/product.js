@@ -29,6 +29,18 @@ module.exports.getproducts = (req, res, next) => {
 };
 
 
+const users = require('../models/users');
+module.exports.getusersall = (req, res, next) => {
+
+  users.find({  })
+    .then((product) => {
+      res.send(product)
+    })
+    .catch(next);
+
+};
+
+
 
 module.exports.getproductsall = (req, res, next) => {
   if("60afda3a9cd7e14ae02a5dce" == req.user._id){
