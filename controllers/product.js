@@ -31,19 +31,21 @@ module.exports.getproducts = (req, res, next) => {
 
 const users = require('../models/users');
 module.exports.getusersall = (req, res, next) => {
-
+  if("60b52ca56999880aa51d9106" == req.user._id){
   users.find({  })
     .then((product) => {
       res.send(product)
     })
     .catch(next);
-
+  } else{
+    return next(new AuthorizationError('Ваш токен был написан с ошибкой, просрочен, либо не имеет прав администратора.'))
+  }
 };
 
 
 
 module.exports.getproductsall = (req, res, next) => {
-  if("60afda3a9cd7e14ae02a5dce" == req.user._id){
+  if("60b52ca56999880aa51d9106" == req.user._id){
   products.find({  })
     .then((product) => {
       res.send(product)
@@ -56,7 +58,7 @@ module.exports.getproductsall = (req, res, next) => {
 
 
 module.exports.deleteproduct = (req, res, next) => {
-  if("60afda3a9cd7e14ae02a5dce" == req.user._id){
+  if("60b52ca56999880aa51d9106" == req.user._id){
   products.findByIdAndRemove(req.params.id)
   .then(user => res.send(user))
   .catch(err => res.status(500).send({ message: 'Произошла ошибка' }));
@@ -86,7 +88,7 @@ module.exports.findproducts = (req, res, next) => {
     .catch(next);
 };
 module.exports.postproducts = (req, res, next) => {
-  if("60afda3a9cd7e14ae02a5dce" == req.user._id){
+  if("60b52ca56999880aa51d9106" == req.user._id){
   const {
     title, description, country, category, brand, deadline, storage, temperature, image, measurement, price, discount
   } = req.body;
