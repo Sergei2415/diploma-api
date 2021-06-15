@@ -19,9 +19,12 @@ module.exports.getproducts = (req, res, next) => {
         } else if(elem.discount == undefined&&nodiscounts<12){
           nodiscounts+=1;
           objectnodiscounts.push(elem);          
-        }else{
-          console.log(elem.discount)
-          break}
+        }else{ 
+          if(nodiscounts==12&&discounts==12){
+            console.log(elem.discount)
+          break
+          }
+          }
       }
       res.send({ objectdiscounts, objectnodiscounts })
     })
